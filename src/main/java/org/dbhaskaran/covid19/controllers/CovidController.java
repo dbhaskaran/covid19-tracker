@@ -15,7 +15,7 @@ public class CovidController {
 	@Autowired
 	CovidServiceImpl covidService;
 
-	@RequestMapping("/display")
+	@RequestMapping("/")
 	public String displayCovids(ModelMap modelMap) {
 		List<Covid> allCovids = covidService.getAllCovid();
 		modelMap.addAttribute("covids", allCovids);
