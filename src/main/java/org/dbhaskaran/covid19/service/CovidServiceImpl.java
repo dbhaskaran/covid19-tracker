@@ -32,7 +32,7 @@ public class CovidServiceImpl implements ICovidService {
 	}
 
 	@Override
-	public Covid getCovidbyId(int id) {
+	public Covid getCovidbyId(long id) {
 		Optional<Covid> covidopt = covidRepo.findById(id);
 		Covid cov = null;
 		if (covidopt.isPresent()) {

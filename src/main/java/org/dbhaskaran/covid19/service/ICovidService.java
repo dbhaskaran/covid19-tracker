@@ -12,7 +12,7 @@ public interface ICovidService {
 
 	void deleteCovid(Covid covid);
 
-	Covid getCovidbyId(int id);
+	Covid getCovidbyId(long id);
 
 	List<Covid> getAllCovid();
 

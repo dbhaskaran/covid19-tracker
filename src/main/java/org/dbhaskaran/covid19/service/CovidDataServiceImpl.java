@@ -19,15 +19,11 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.dbhaskaran.covid19.entities.Covid;
 import org.dbhaskaran.covid19.repos.ICovid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
-
-	private static final Logger logger = LoggerFactory.getLogger(CovidDataServiceImpl.class);
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
 
 	@Autowired
@@ -58,7 +54,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 						Covid c = new Covid(state, country, lastupdate, confirmed, deaths, recovered, latitude,
 								longitude);
 						covidRepo.save(c);
-						logger.info("Saved to DB: " + c.toString());
+						System.out.println("Saved to DB: " + c.toString());
 					}
 				}
 			}

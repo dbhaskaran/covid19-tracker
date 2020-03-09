@@ -1,37 +1,22 @@
 package org.dbhaskaran.covid19.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.springframework.stereotype.Component;
 
 @Entity
-@Component
-@Table(name = "covid")
 public class Covid {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private int id;
-	@Column(name = "province")
+	private long id;
 	private String state;
-	@Column(name = "country")
 	private String country;
-	@Column(name = "lastupdate")
-	private String lastUpdate;
-	@Column(name = "confirmed")
+	private String lastupdate;
 	private int confirmed;
-	@Column(name = "deaths")
 	private int deaths;
-	@Column(name = "recovered")
 	private int recovered;
-	@Column(name = "latitude")
 	private String latitude;
-	@Column(name = "longitude")
 	private String longitude;
 
 	public Covid() {
@@ -42,7 +27,7 @@ public class Covid {
 		super();
 		this.state = state;
 		this.country = country;
-		this.lastUpdate = lastUpdate;
+		this.lastupdate = lastUpdate;
 		this.confirmed = confirmed;
 		this.deaths = deaths;
 		this.recovered = recovered;
@@ -50,11 +35,11 @@ public class Covid {
 		this.longitude = longitude;
 	}
 
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -75,11 +60,11 @@ public class Covid {
 	}
 
 	public String getLastUpdate() {
-		return lastUpdate;
+		return lastupdate;
 	}
 
 	public void setLastUpdate(String lastUpdate) {
-		this.lastUpdate = lastUpdate;
+		this.lastupdate = lastUpdate;
 	}
 
 	public int getConfirmed() {
@@ -124,7 +109,7 @@ public class Covid {
 
 	@Override
 	public String toString() {
-		return "Covid [state=" + state + ", country=" + country + ", lastUpdate=" + lastUpdate + ", confirmed="
+		return "Covid [state=" + state + ", country=" + country + ", lastUpdate=" + lastupdate + ", confirmed="
 				+ confirmed + ", deaths=" + deaths + ", recovered=" + recovered + ", latitude=" + latitude
 				+ ", longitude=" + longitude + "]";
 	}
