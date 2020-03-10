@@ -41,6 +41,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 				if (entity != null) {
 					String result = EntityUtils.toString(entity);
 					StringReader csvBody = new StringReader(result);
+					System.out.println(csvBody);
 					Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBody);
 					for (CSVRecord record : records) {
 						String state = record.get("Province/State");
@@ -54,7 +55,6 @@ public class CovidDataServiceImpl implements ICovidDataService {
 						Covid c = new Covid(state, country, lastupdate, confirmed, deaths, recovered, latitude,
 								longitude);
 						covidRepo.save(c);
-						System.out.println("Saved to DB: " + c.toString());
 					}
 				}
 			}
