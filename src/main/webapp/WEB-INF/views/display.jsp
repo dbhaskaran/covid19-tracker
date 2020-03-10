@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div class="container">
-		<h2>COVID-19 Worldwide Data</h2>
+		<h2><a href="https://github.com/dbhaskaran/covid19-tracker" target="_blank">COVID-19 Worldwide Data</a></h2> 
 		<p>Powered by: <a href="https://github.com/CSSEGISandData/COVID-19" target="_blank"> Johns Hopkins CSSE </a></p>
 		
 		<table class="table table-striped">
