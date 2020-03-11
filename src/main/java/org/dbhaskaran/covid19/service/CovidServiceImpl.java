@@ -34,6 +34,7 @@ public class CovidServiceImpl implements ICovidService {
 	@Override
 	public Covid getCovidbyId(long id) {
 		Optional<Covid> covidopt = covidRepo.findById(id);
+
 		Covid cov = null;
 		if (covidopt.isPresent()) {
 			cov = covidopt.get();
@@ -44,6 +45,11 @@ public class CovidServiceImpl implements ICovidService {
 	@Override
 	public List<Covid> getAllCovid() {
 		return covidRepo.findAll();
+	}
+
+	@Override
+	public List<Covid> searchCovid(String country) {
+		return covidRepo.findByCountryContainingIgnoreCase(country);
 	}
 
 }

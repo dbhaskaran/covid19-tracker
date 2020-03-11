@@ -16,4 +16,6 @@ public interface ICovidService {
 
 	List<Covid> getAllCovid();
 
+	List<Covid> searchCovid(String country);
+
 }
