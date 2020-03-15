@@ -34,7 +34,7 @@
 						</div>
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 50px;">
-					<script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=CO6oEw3RaHKtpDqbEsnyI5wIIiyiPQg4cazaWIqyLUs"></script>
+					<script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=xxx"></script>
 					</div>
 			</div>
 
