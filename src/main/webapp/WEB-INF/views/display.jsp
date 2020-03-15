@@ -17,21 +17,28 @@
 <body>
 	<div class="container">
 		<div class="row">
-        <div class="col-md-8 col-sm-8 col-xs-12">
-            <h2>COVID-19 Worldwide Data</h2>
-        </div>
+			<div class="col-md-8 col-sm-8 col-xs-12">
+				<h2>
+					<a href="https://github.com/dbhaskaran/covid19-tracker"
+						target="_blank">COVID-19 Worldwide Data</a>
+				</h2>
+			</div>
 
-        <div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 30px;">
-            <form action="search" method="POST" class="form-main">
-            <div class="col-md-8 col-sm-8 col-xs-12">
-                <label class="sr-only" for="search">Search</label>
-                <div class="input-group">
-                    <input type="text" class="form-control input-search" name="country" id="search" placeholder="Search">
-                </div>
-            </div>
-        </div>      
+			<div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 30px;">
+				<form action="search" method="POST" class="form-main">
+					<div class="col-md-8 col-sm-8 col-xs-12">
+						<label class="sr-only" for="search">Search</label>
+						<div class="input-group">
+							<input type="text" class="form-control input-search"
+								name="country" id="search" placeholder="Search">
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 50px;">
+					<script type="text/javascript" id="clstr_globe" src="//cdn.clustrmaps.com/globe.js?d=CO6oEw3RaHKtpDqbEsnyI5wIIiyiPQg4cazaWIqyLUs"></script>
+					</div>
+			</div>
 
-    </div>
+		</div>
 		<p>
 			Powered by: <a href="https://github.com/CSSEGISandData/COVID-19"
 				target="_blank"> Johns Hopkins CSSE </a>
