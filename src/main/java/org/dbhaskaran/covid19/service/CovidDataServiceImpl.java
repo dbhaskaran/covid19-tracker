@@ -26,38 +26,42 @@ import org.springframework.stereotype.Service;
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-	private static String goodDate = new String();
+	private static String goodDate = new String("03-13-2020.csv");
+	private static boolean flag = true;
 
 	@Autowired
 	private ICovid covidRepo;
 
 	@Override
 	@PostConstruct
-	@Scheduled(cron = "0 */10 * * * *")
+	@Scheduled(cron = "0 0 15-22 * * *", zone = "America/Los_Angeles")
 	public void fetchCovidData() {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
-		HttpGet request = new HttpGet(DATA_URL + getCurrentDate());
+		HttpGet request = new HttpGet(DATA_URL + goodDate);
 		HttpEntity entity = null;
 		try {
 			CloseableHttpResponse response = httpClient.execute(request);
-			if (response.getStatusLine().getStatusCode() == 200 && !goodDate.equalsIgnoreCase(getCurrentDate())) {
-				goodDate = getCurrentDate();
+			if (response.getStatusLine().getStatusCode() == 200 && flag) {
 				entity = response.getEntity();
+				if (goodDate.equalsIgnoreCase(getCurrentDate())) {
+					flag = !flag;
+				}
+				goodDate = getCurrentDate();
 			}
 
 			if (entity != null) {
 				String result = EntityUtils.toString(entity);
 				StringReader csvBody = new StringReader(result);
-				Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBody);
+				Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(csvBody);
 				for (CSVRecord record : records) {
-					String state = record.get("Province/State");
-					String country = record.get("Country/Region");
-					String lastupdate = record.get("Last Update");
-					int confirmed = Integer.parseInt(record.get("Confirmed"));
-					int deaths = Integer.parseInt(record.get("Deaths"));
-					int recovered = Integer.parseInt(record.get("Recovered"));
-					String latitude = record.get("Latitude");
-					String longitude = record.get("Longitude");
+					String state = record.get(0);
+					String country = record.get(1);
+					String lastupdate = record.get(2);
+					int confirmed = Integer.parseInt(record.get(3));
+					int deaths = Integer.parseInt(record.get(4));
+					int recovered = Integer.parseInt(record.get(5));
+					String latitude = record.get(6);
+					String longitude = record.get(7);
 					Covid c = new Covid(state, country, lastupdate, confirmed, deaths, recovered, latitude, longitude);
 					covidRepo.save(c);
 				}
@@ -78,6 +82,11 @@ public class CovidDataServiceImpl implements ICovidDataService {
 			}
 		}
 
+	}
+
+	@Scheduled(cron = "0 0 0 * * *", zone = "America/Los_Angeles")
+	public void resetFlag() {
+		flag = !flag;
 	}
 
 	private static String getCurrentDate() {

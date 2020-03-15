@@ -46,4 +46,9 @@ public class CovidServiceImpl implements ICovidService {
 		return covidRepo.findAll();
 	}
 
+	@Override
+	public List<Covid> searchCovid(String country) {
+		return covidRepo.findByCountryContainingIgnoreCase(country);
+	}
+
 }
