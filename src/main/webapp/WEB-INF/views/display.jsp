@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -65,7 +66,7 @@
 						<td>${covid.deaths}</td>
 						<td>${covid.recovered}</td>
 						<td>${covid.confirmed - (covid.deaths + covid.recovered)}</td>
-						<td>${(covid.recovered/covid.confirmed)*100}</td>
+						<td><fmt:formatNumber type="number" maxFractionDigits="2" minFractionDigits="2" value="${(covid.recovered/covid.confirmed)*100}"/></td>
 					</tr>
 				</c:forEach>
 			</tbody>
