@@ -10,6 +10,7 @@ public class Covid {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	private String county;
 	private String state;
 	private String country;
 	private String lastupdate;
@@ -22,9 +23,10 @@ public class Covid {
 	public Covid() {
 	}
 
-	public Covid(String state, String country, String lastUpdate, int confirmed, int deaths, int recovered,
-			String latitude, String longitude) {
+	public Covid(String county, String state, String country, String lastUpdate, int confirmed, int deaths,
+			int recovered, String latitude, String longitude) {
 		super();
+		this.county = county;
 		this.state = state;
 		this.country = country;
 		this.lastupdate = lastUpdate;
@@ -41,6 +43,14 @@ public class Covid {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getCounty() {
+		return county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
 	}
 
 	public String getState() {
@@ -109,9 +119,9 @@ public class Covid {
 
 	@Override
 	public String toString() {
-		return "Covid [state=" + state + ", country=" + country + ", lastUpdate=" + lastupdate + ", confirmed="
-				+ confirmed + ", deaths=" + deaths + ", recovered=" + recovered + ", latitude=" + latitude
-				+ ", longitude=" + longitude + "]";
+		return "Covid [county=" + county + ", state=" + state + ", country=" + country + ", lastUpdate=" + lastupdate
+				+ ", confirmed=" + confirmed + ", deaths=" + deaths + ", recovered=" + recovered + ", latitude="
+				+ latitude + ", longitude=" + longitude + "]";
 	}
 
 }

@@ -50,6 +50,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 				StringReader csvBody = new StringReader(result);
 				Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(csvBody);
 				for (CSVRecord record : records) {
+					String county = record.get(1);
 					String state = record.get(2);
 					String country = record.get(3);
 					String lastupdate = record.get(4);
@@ -58,7 +59,8 @@ public class CovidDataServiceImpl implements ICovidDataService {
 					int recovered = Integer.parseInt(record.get(9));
 					String latitude = record.get(5);
 					String longitude = record.get(6);
-					Covid c = new Covid(state, country, lastupdate, confirmed, deaths, recovered, latitude, longitude);
+					Covid c = new Covid(county, state, country, lastupdate, confirmed, deaths, recovered, latitude,
+							longitude);
 					covidRepo.save(c);
 				}
 			}
