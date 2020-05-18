@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-	private static String goodDate = new String("05-03-2020.csv");
+	private static String goodDate = new String("05-17-2020.csv");
 
 	@Autowired
 	private ICovid covidRepo;
