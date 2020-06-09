@@ -64,8 +64,10 @@ public class CovidDataServiceImpl implements ICovidDataService {
 						usObj.setConfirmed(usObj.getConfirmed() + c.getConfirmed());
 						usObj.setDeaths(usObj.getDeaths() + c.getDeaths());
 						usObj.setRecovered(usObj.getRecovered() + c.getRecovered());
+					} else {
+						covidRepo.save(c);
 					}
-					covidRepo.save(c);
+
 				}
 				covidRepo.save(usObj);
 			}
