@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-	private static String goodDate = new String("05-28-2020.csv");
+	private static String goodDate = new String("06-08-2020.csv");
 
 	@Autowired
 	private ICovid covidRepo;
@@ -38,6 +38,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpGet request = new HttpGet(DATA_URL + goodDate);
 		HttpEntity entity = null;
+		Covid usObj = new Covid("US", "", 0, 0, 0, "41.76486060000001", "-73.74356679");
 		try {
 			CloseableHttpResponse response = httpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200) {
@@ -50,8 +51,6 @@ public class CovidDataServiceImpl implements ICovidDataService {
 				StringReader csvBody = new StringReader(result);
 				Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(csvBody);
 				for (CSVRecord record : records) {
-					String county = record.get(1);
-					String state = record.get(2);
 					String country = record.get(3);
 					String lastupdate = record.get(4);
 					int confirmed = Integer.parseInt(record.get(7));
@@ -59,10 +58,16 @@ public class CovidDataServiceImpl implements ICovidDataService {
 					int recovered = Integer.parseInt(record.get(9));
 					String latitude = record.get(5);
 					String longitude = record.get(6);
-					Covid c = new Covid(county, state, country, lastupdate, confirmed, deaths, recovered, latitude,
-							longitude);
+					Covid c = new Covid(country, lastupdate, confirmed, deaths, recovered, latitude, longitude);
+					if (c.getCountry().equals("US")) {
+						usObj.setLastUpdate(c.getLastUpdate());
+						usObj.setConfirmed(usObj.getConfirmed() + c.getConfirmed());
+						usObj.setDeaths(usObj.getDeaths() + c.getDeaths());
+						usObj.setRecovered(usObj.getRecovered() + c.getRecovered());
+					}
 					covidRepo.save(c);
 				}
+				covidRepo.save(usObj);
 			}
 
 		} catch (ClientProtocolException e) {
