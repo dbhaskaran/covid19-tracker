@@ -48,8 +48,6 @@
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>County</th>
-					<th>State</th>
 					<th>Country</th>
 					<th>Confirmed</th>
 					<th>Deaths</th>
@@ -61,8 +59,6 @@
 			<tbody>
 				<c:forEach items="${covids}" var="covid">
 					<tr>
-						<td>${covid.county}</td>
-						<td>${covid.state}</td>
 						<td>${covid.country}</td>
 						<td>${covid.confirmed}</td>
 						<td>${covid.deaths}</td>
