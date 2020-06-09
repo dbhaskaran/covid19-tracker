@@ -9,4 +9,6 @@ public interface ICovid extends JpaRepository<Covid, Long> {
 
 	List<Covid> findByCountryContainingIgnoreCase(String country);
 
+	Covid findByCountry(String country);
+
 }

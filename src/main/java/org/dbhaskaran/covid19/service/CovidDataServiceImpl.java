@@ -38,7 +38,6 @@ public class CovidDataServiceImpl implements ICovidDataService {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpGet request = new HttpGet(DATA_URL + goodDate);
 		HttpEntity entity = null;
-		Covid usObj = new Covid("US", "", 0, 0, 0, "41.76486060000001", "-73.74356679");
 		try {
 			CloseableHttpResponse response = httpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200) {
@@ -59,17 +58,18 @@ public class CovidDataServiceImpl implements ICovidDataService {
 					String latitude = record.get(5);
 					String longitude = record.get(6);
 					Covid c = new Covid(country, lastupdate, confirmed, deaths, recovered, latitude, longitude);
-					if (c.getCountry().equals("US")) {
-						usObj.setLastUpdate(c.getLastUpdate());
-						usObj.setConfirmed(usObj.getConfirmed() + c.getConfirmed());
-						usObj.setDeaths(usObj.getDeaths() + c.getDeaths());
-						usObj.setRecovered(usObj.getRecovered() + c.getRecovered());
+					Covid curr = covidRepo.findByCountry(country);
+					if (curr != null) {
+						curr.setLastUpdate(c.getLastUpdate());
+						curr.setConfirmed(curr.getConfirmed() + c.getConfirmed());
+						curr.setDeaths(curr.getDeaths() + c.getDeaths());
+						curr.setRecovered(curr.getRecovered() + c.getRecovered());
+						covidRepo.save(curr);
 					} else {
 						covidRepo.save(c);
 					}
-
 				}
-				covidRepo.save(usObj);
+
 			}
 
 		} catch (ClientProtocolException e) {
