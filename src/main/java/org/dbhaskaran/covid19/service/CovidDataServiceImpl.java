@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-	private static String goodDate = new String("06-08-2020.csv");
+	private static String goodDate = new String("06-09-2020.csv");
 
 	@Autowired
 	private ICovid covidRepo;
@@ -49,6 +49,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 				String result = EntityUtils.toString(entity);
 				StringReader csvBody = new StringReader(result);
 				Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(csvBody);
+				covidRepo.deleteAll();
 				for (CSVRecord record : records) {
 					String country = record.get(3);
 					String lastupdate = record.get(4);
