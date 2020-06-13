@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICovid extends JpaRepository<Covid, Long> {
 
-	List<Covid> findByCountryContainingIgnoreCase(String country);
+	List<Covid> findByCountryIgnoreCase(String country);
+
+	Covid findByCountry(String country);
 
 }

@@ -48,7 +48,7 @@ public class CovidServiceImpl implements ICovidService {
 
 	@Override
 	public List<Covid> searchCovid(String country) {
-		return covidRepo.findByCountryContainingIgnoreCase(country);
+		return covidRepo.findByCountryIgnoreCase(country);
 	}
 
 }
