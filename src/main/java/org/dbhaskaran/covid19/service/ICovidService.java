@@ -3,6 +3,7 @@ package org.dbhaskaran.covid19.service;
 import java.util.List;
 
 import org.dbhaskaran.covid19.entities.Covid;
+import org.dbhaskaran.covid19.entities.Stats;
 
 public interface ICovidService {
 
@@ -17,5 +18,7 @@ public interface ICovidService {
 	List<Covid> getAllCovid();
 
 	List<Covid> searchCovid(String country);
+	
+	Stats getStats();
 
 }

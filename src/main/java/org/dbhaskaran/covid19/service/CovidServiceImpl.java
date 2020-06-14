@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.dbhaskaran.covid19.entities.Covid;
+import org.dbhaskaran.covid19.entities.Stats;
 import org.dbhaskaran.covid19.repos.ICovid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,18 @@ public class CovidServiceImpl implements ICovidService {
 
 	@Override
 	public List<Covid> searchCovid(String country) {
-		return covidRepo.findByCountryContainingIgnoreCase(country);
+		return covidRepo.findByCountryIgnoreCase(country);
+	}
+	
+	@Override
+	public Stats getStats() {
+		int confirmed = covidRepo.getTotalConfirmed();
+		int deaths = covidRepo.getTotalDeaths();
+		int recovered = covidRepo.getTotalrecovered();
+		int active = confirmed - (deaths + recovered);
+		String updated = covidRepo.getLastUpdated();
+		
+		return new Stats(active, updated, confirmed, deaths, recovered);
 	}
 
 }
