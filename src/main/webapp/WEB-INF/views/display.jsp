@@ -50,9 +50,9 @@
 		<p>
 			Powered by: <a href="https://github.com/CSSEGISandData/COVID-19"
 				target="_blank"> Johns Hopkins CSSE </a>
-			<div class="api blink">REST API</div>: <a href="https://covid-dashboard.herokuapp.com/api/"
+			<div class="api blink">REST API</div>: <a href="https://covid-dashboard.herokuapp.com/api/countries/"
 				target="_blank"> GET All </a>
-				<a href="https://covid-dashboard.herokuapp.com/api/india"
+				<a href="https://covid-dashboard.herokuapp.com/api/countries/india"
 				target="_blank"> GET Country </a>
 		</p>
 
