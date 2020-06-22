@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-	private static String goodDate = new String("06-18-2020.csv");
+	private static String currDate = new String("06-21-2020.csv");
 
 	@Autowired
 	private ICovid covidRepo;
@@ -36,12 +36,12 @@ public class CovidDataServiceImpl implements ICovidDataService {
 	@Scheduled(cron = "0 0 15-22 * * *", zone = "America/Los_Angeles")
 	public void fetchCovidData() {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
-		HttpGet request = new HttpGet(DATA_URL + goodDate);
+		HttpGet request = new HttpGet(DATA_URL + currDate);
 		HttpEntity entity = null;
 		try {
 			CloseableHttpResponse response = httpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200) {
-				goodDate = getCurrentDate();
+				currDate = getNextDate();
 				entity = response.getEntity();
 			}
 
@@ -90,9 +90,10 @@ public class CovidDataServiceImpl implements ICovidDataService {
 
 	}
 
-	private static String getCurrentDate() {
+	private static String getNextDate() {
 		Date date = new Date();
 		LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		localDate = localDate.plusDays(1);
 		String year = Integer.toString(localDate.getYear());
 		String month = Integer.toString(localDate.getMonthValue());
 		String day = Integer.toString(localDate.getDayOfMonth());
