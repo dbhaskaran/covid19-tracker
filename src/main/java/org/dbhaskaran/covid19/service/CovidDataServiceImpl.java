@@ -19,8 +19,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.dbhaskaran.covid19.entities.Covid;
 import org.dbhaskaran.covid19.repos.ICovid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -29,25 +27,22 @@ import org.springframework.stereotype.Service;
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
 	private static String currDate = new String("09-24-2020.csv");
-	private static final Logger logger = LoggerFactory.getLogger(CovidDataServiceImpl.class);
 
 	@Autowired
 	private ICovid covidRepo;
 
 	@Override
 	@PostConstruct
-	@Scheduled(cron = "0 0 15-22 * * *", zone = "America/Los_Angeles")
+	@Scheduled(cron = "0 0/50 * * * ?", zone = "America/Los_Angeles")
 	public void fetchCovidData() {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
 		HttpGet request = new HttpGet(DATA_URL + currDate);
-		logger.info("Trying Data pull for " + currDate);
 		HttpEntity entity = null;
 		try {
 			CloseableHttpResponse response = httpClient.execute(request);
 			if (response.getStatusLine().getStatusCode() == 200) {
 				currDate = getNextDate();
 				entity = response.getEntity();
-				logger.info("Data pull success, setting next pull date to " + currDate);
 			}
 
 			if (entity != null) {
