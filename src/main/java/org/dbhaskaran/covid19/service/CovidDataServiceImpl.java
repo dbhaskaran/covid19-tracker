@@ -27,7 +27,8 @@ import org.springframework.stereotype.Service;
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
 
-	private static String currDate = new String("03-26-2021.csv");
+	// Update date
+	private static String currDate = new String("06-17-2021.csv");
 
 	@Autowired
 	private ICovid covidRepo;
@@ -55,9 +56,9 @@ public class CovidDataServiceImpl implements ICovidDataService {
 				for (CSVRecord record : records) {
 					String country = record.get(3);
 					String lastupdate = record.get(4);
-					int confirmed = Integer.parseInt(record.get(7));
-					int deaths = Integer.parseInt(record.get(8));
-					int recovered = Integer.parseInt(record.get(9));
+					int confirmed = Integer.parseInt(record.get(7).isEmpty() ? "0" : record.get(7));
+					int deaths = Integer.parseInt(record.get(8).isEmpty() ? "0" : record.get(8));
+					int recovered = Integer.parseInt(record.get(9).isEmpty() ? "0" : record.get(9));
 					String latitude = record.get(5);
 					String longitude = record.get(6);
 					Covid c = new Covid(country, lastupdate, confirmed, deaths, recovered, latitude, longitude);
