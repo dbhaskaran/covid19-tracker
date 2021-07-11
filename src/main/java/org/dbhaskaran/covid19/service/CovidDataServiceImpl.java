@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
-	private static String VAX_URL = "https://raw.githubusercontent.com/BloombergGraphics/covid-vaccine-tracker-data/master/data/current-global.csv/";
+	private static String VAX_URL = "https://raw.githubusercontent.com/BloombergGraphics/covid-vaccine-tracker-data/master/data/current-global.csv";
 
 	// Update date
 	private static String currDate = new String("07-09-2021.csv");
@@ -44,6 +44,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 	@Scheduled(cron = "0 0/50 * * * ?", zone = "America/Los_Angeles")
 	public void fetchCovidData() {
 		CloseableHttpClient httpClient = HttpClients.createDefault();
+		CloseableHttpClient httpClientvax = HttpClients.createDefault();
 		HttpGet request = new HttpGet(DATA_URL + currDate);
 		HttpEntity entity = null;
 		try {
@@ -84,7 +85,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 
 			HttpGet requestVax = new HttpGet(VAX_URL);
 			HttpEntity entityVax = null;
-			CloseableHttpResponse responseVax = httpClient.execute(requestVax);
+			CloseableHttpResponse responseVax = httpClientvax.execute(requestVax);
 
 			if (responseVax.getStatusLine().getStatusCode() == 200) {
 				entityVax = responseVax.getEntity();
@@ -95,7 +96,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 				String result = EntityUtils.toString(entityVax);
 				StringReader csvBody = new StringReader(result);
 				Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(csvBody);
-				covidRepo.deleteAll();
+				vaxRepo.deleteAll();
 				for (CSVRecord record : records) {
 					String country = record.get(2);
 					long population = Long.parseLong(record.get(1).isEmpty() ? "0" : record.get(1));
@@ -127,6 +128,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 		} finally {
 			try {
 				httpClient.close();
+				httpClientvax.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
