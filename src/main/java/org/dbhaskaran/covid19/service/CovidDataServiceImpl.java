@@ -28,7 +28,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
 
 	// Update date
-	private static String currDate = new String("06-17-2021.csv");
+	private static String currDate = new String("07-09-2021.csv");
 
 	@Autowired
 	private ICovid covidRepo;
