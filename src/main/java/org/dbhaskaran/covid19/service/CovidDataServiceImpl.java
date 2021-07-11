@@ -18,7 +18,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.dbhaskaran.covid19.entities.Covid;
+import org.dbhaskaran.covid19.entities.Vax;
 import org.dbhaskaran.covid19.repos.ICovid;
+import org.dbhaskaran.covid19.repos.IVax;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -26,12 +28,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class CovidDataServiceImpl implements ICovidDataService {
 	private static String DATA_URL = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/";
+	private static String VAX_URL = "https://raw.githubusercontent.com/BloombergGraphics/covid-vaccine-tracker-data/master/data/current-global.csv/";
 
 	// Update date
 	private static String currDate = new String("07-09-2021.csv");
 
 	@Autowired
 	private ICovid covidRepo;
+
+	@Autowired
+	private IVax vaxRepo;
 
 	@Override
 	@PostConstruct
@@ -71,6 +77,42 @@ public class CovidDataServiceImpl implements ICovidDataService {
 						covidRepo.save(curr);
 					} else {
 						covidRepo.save(c);
+					}
+				}
+
+			}
+
+			HttpGet requestVax = new HttpGet(VAX_URL);
+			HttpEntity entityVax = null;
+			CloseableHttpResponse responseVax = httpClient.execute(requestVax);
+
+			if (responseVax.getStatusLine().getStatusCode() == 200) {
+				entityVax = responseVax.getEntity();
+			}
+
+			if (entityVax != null) {
+
+				String result = EntityUtils.toString(entityVax);
+				StringReader csvBody = new StringReader(result);
+				Iterable<CSVRecord> records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(csvBody);
+				covidRepo.deleteAll();
+				for (CSVRecord record : records) {
+					String country = record.get(2);
+					long population = Long.parseLong(record.get(1).isEmpty() ? "0" : record.get(1));
+					long dosesAdministered = Long.parseLong(record.get(3).isEmpty() ? "0" : record.get(3));
+					long peopleVaccinated = Long.parseLong(record.get(4).isEmpty() ? "0" : record.get(4));
+					long completedVaccination = Long.parseLong(record.get(5).isEmpty() ? "0" : record.get(5));
+
+					Vax v = new Vax(country, population, dosesAdministered, peopleVaccinated, completedVaccination);
+					Vax curr = vaxRepo.findByCountry(country);
+					if (curr != null) {
+						curr.setPopulation(v.getPopulation());
+						curr.setDosesAdministered(v.getDosesAdministered());
+						curr.setPeopleVaccinated(v.getPeopleVaccinated());
+						curr.setCompletedVaccination(v.getCompletedVaccination());
+						vaxRepo.save(curr);
+					} else {
+						vaxRepo.save(v);
 					}
 				}
 
