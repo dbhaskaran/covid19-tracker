@@ -37,15 +37,9 @@
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
-		<!--  <dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.48</version>
-		</dependency>-->
-		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
-			<groupId>org.postgresql</groupId>
-			<artifactId>postgresql</artifactId>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
