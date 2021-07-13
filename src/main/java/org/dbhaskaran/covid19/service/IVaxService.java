@@ -2,6 +2,7 @@ package org.dbhaskaran.covid19.service;
 
 import java.util.List;
 
+import org.dbhaskaran.covid19.entities.Stats;
 import org.dbhaskaran.covid19.entities.Vax;
 
 public interface IVaxService {
@@ -13,6 +14,8 @@ public interface IVaxService {
 	void deleteVax(Vax vax);
 
 	Vax getVaxbyId(long id);
+	
+	Stats getStats();
 
 	List<Vax> getAllVax();
 

@@ -31,7 +31,7 @@ public class CovidDataServiceImpl implements ICovidDataService {
 	private static String VAX_URL = "https://raw.githubusercontent.com/BloombergGraphics/covid-vaccine-tracker-data/master/data/current-global.csv";
 
 	// Update date
-	private static String currDate = new String("07-09-2021.csv");
+	private static String currDate = new String("07-11-2021.csv");
 
 	@Autowired
 	private ICovid covidRepo;

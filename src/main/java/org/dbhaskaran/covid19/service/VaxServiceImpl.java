@@ -3,6 +3,7 @@ package org.dbhaskaran.covid19.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.dbhaskaran.covid19.entities.Stats;
 import org.dbhaskaran.covid19.entities.Vax;
 import org.dbhaskaran.covid19.repos.IVax;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,16 @@ public class VaxServiceImpl implements IVaxService {
 	@Override
 	public List<Vax> searchVax(String country) {
 		return vaxRepo.findByCountryIgnoreCase(country);
+	}
+	
+	@Override
+	public Stats getStats() {
+		long population = vaxRepo.getPopulation();
+		long dosesAdministered = vaxRepo.getDosesAdministered();
+		long peopleVaccinated= vaxRepo.getPeopleVaccinated();
+		long completedVaccination = vaxRepo.getCompletedVaccination();
+		
+		return new Stats(population, dosesAdministered, peopleVaccinated, completedVaccination);
 	}
 
 }
