@@ -8,10 +8,11 @@ public class Stats {
 	private int confirmed;
 	private int deaths;
 	private int recovered;
+	private long population;
+	private long dosesAdministered;
+	private long peopleVaccinated;
+	private long completedVaccination;
 	
-	public Stats() {
-		
-	}
 	
 	public Stats(int active, String lastupdate, int confirmed, int deaths, int recovered) {
 		super();
@@ -20,6 +21,14 @@ public class Stats {
 		this.confirmed = confirmed;
 		this.deaths = deaths;
 		this.recovered = recovered;
+	}
+	
+	public Stats(long population, long dosesAdministered, long peopleVaccinated, long completedVaccination) {
+		super();
+		this.population = population;
+		this.dosesAdministered = dosesAdministered;
+		this.peopleVaccinated = peopleVaccinated;
+		this.completedVaccination = completedVaccination;
 	}
 
 	public int getActive() {
@@ -51,6 +60,38 @@ public class Stats {
 	}
 	public void setRecovered(int recovered) {
 		this.recovered = recovered;
+	}
+
+	public long getPopulation() {
+		return population;
+	}
+
+	public void setPopulation(long population) {
+		this.population = population;
+	}
+
+	public long getDosesAdministered() {
+		return dosesAdministered;
+	}
+
+	public void setDosesAdministered(long dosesAdministered) {
+		this.dosesAdministered = dosesAdministered;
+	}
+
+	public long getPeopleVaccinated() {
+		return peopleVaccinated;
+	}
+
+	public void setPeopleVaccinated(long peopleVaccinated) {
+		this.peopleVaccinated = peopleVaccinated;
+	}
+
+	public long getCompletedVaccination() {
+		return completedVaccination;
+	}
+
+	public void setCompletedVaccination(long completedVaccination) {
+		this.completedVaccination = completedVaccination;
 	} 
 
 }
