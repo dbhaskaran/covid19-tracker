@@ -42,7 +42,7 @@
 					</div>
 					<div class="col-md-4 col-sm-4 col-xs-12" style="padding-top: 50px;">
 						<script type="text/javascript" id="clstr_globe"
-							src="//cdn.clustrmaps.com/globe.js"></script>
+							></script>
 					</div>
 			</div>
 
